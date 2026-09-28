@@ -1,0 +1,4 @@
+build/
+.dygit/
+*.o
+/dygit
