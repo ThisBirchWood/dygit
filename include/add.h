@@ -2,6 +2,8 @@
 #ifndef ADD_H
 #define ADD_H
 #define HASH_RAW_LEN 20
+#define HASH_HEX_LEN 40
+#define HASH_HEX_BUF (HASH_HEX_LEN + 1)
 
 #include <stddef.h>
 #include <stdbool.h>
