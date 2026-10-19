@@ -2,3 +2,5 @@ build/
 .dygit/
 *.o
 /dygit
+
+.vscode
