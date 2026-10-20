@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "init.h"
-#include "add.h"
+#include "hash_object.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -16,12 +16,18 @@ int main(int argc, char *argv[]) {
         run_init("./");
     } else if (strcmp(command, "hash-object") == 0) {
         if (argc < 3) return 1;
-        char hash[HASH_HEX_BUF];
+
+        struct hash_object_opts opts = {
+            .type = OBJ_BLOB,
+            .write_db = false,
+            .is_stdin = false,
+        };
+
+        char hash[41];
 
         hash_object(
             argv[2],
-            strlen(argv[2]),
-            OBJ_BLOB,
+            &opts,
             hash
         );
 
