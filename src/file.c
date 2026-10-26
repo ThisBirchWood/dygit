@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <sys/stat.h>
+
+#include "file.h"
 
 // Caller must free
 unsigned char *read_file(const char *path, size_t *out_len) {
@@ -45,4 +49,21 @@ int write_file(const char *path, const char *content, size_t content_len) {
     }
 
     return 0;
+}
+
+bool path_exists(const char *path) {
+    struct stat st;
+    return stat(path, &st) == 0;
+}
+
+bool is_regular_file(const char *path) {
+    struct stat st;
+    if (stat(path, &st) != 0) return false;
+    return S_ISREG(st.st_mode);
+}
+
+bool is_directory(const char *path) {
+    struct stat st;
+    if (stat(path, &st) != 0) return false;
+    return S_ISDIR(st.st_mode);
 }
