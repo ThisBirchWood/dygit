@@ -67,3 +67,15 @@ bool is_directory(const char *path) {
     if (stat(path, &st) != 0) return false;
     return S_ISDIR(st.st_mode);
 }
+
+bool path_join(
+    char *out, 
+    size_t out_size, 
+    const char *a, 
+    const char *b
+) {
+    size_t alen = strlen(a);
+    bool needs_sep = alen > 0 && a[alen - 1] != '/';
+    int n = snprintf(out, out_size, "%s%s%s", a, needs_sep ? "/" : "", b);
+    return n >= 0 && (size_t)n < out_size;
+}
