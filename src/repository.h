@@ -6,4 +6,6 @@ struct repository {
     char *object_dir; //relative path to .dygit/objects
 };
 
+int open_repository(struct repository *repo, const char *start_path);
+
 #endif

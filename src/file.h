@@ -7,7 +7,7 @@
 #define PATH_MAX 4096
 
 unsigned char *read_file(const char *path, size_t *out_len);
-int write_file(const char *path, const char *content, size_t content_len);
+int write_file(const char *path, const unsigned char *content, size_t content_len);
 bool path_exists(const char *path);
 bool is_regular_file(const char *path);
 bool is_directory(const char *path);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <sys/stat.h>
+#include <string.h>
 
 #include "file.h"
 
@@ -30,7 +31,7 @@ fail:
     return NULL;
 }
 
-int write_file(const char *path, const char *content, size_t content_len) {
+int write_file(const char *path, const unsigned char *content, size_t content_len) {
     FILE *fp = fopen(path, "wx");
     if (fp == NULL) {
         perror("fopen");
