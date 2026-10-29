@@ -19,7 +19,7 @@ else
   endif
 endif
 
-CFLAGS  := -Wall -Wextra -std=c11 -MMD -MP -Iinclude $(OPENSSL_CFLAGS)
+CFLAGS  := -Wall -Wextra -std=c11 -MMD -MP -g -O0 -Iinclude $(OPENSSL_CFLAGS)
 LDLIBS  := $(OPENSSL_LIBS)
 SRC_DIR := src
 BUILD_DIR := build
