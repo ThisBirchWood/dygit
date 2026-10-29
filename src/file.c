@@ -9,7 +9,10 @@
 // Caller must free
 unsigned char *read_file(const char *path, size_t *out_len) {
     FILE *f = fopen(path, "rb");
-    if (!f) return NULL;
+    if (!f) {
+        perror(path);
+        return NULL;
+}
 
     if (fseek(f, 0, SEEK_END) != 0) goto fail;
     long size = ftell(f);
