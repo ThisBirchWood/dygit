@@ -15,23 +15,7 @@ int main(int argc, char *argv[]) {
     if (strcmp(command, "init") == 0) {
         run_init("./");
     } else if (strcmp(command, "hash-object") == 0) {
-        if (argc < 3) return 1;
-
-        struct hash_object_opts opts = {
-            .type = OBJ_BLOB,
-            .write_db = false,
-            .is_stdin = false,
-        };
-
-        char hash[41];
-
-        hash_object(
-            argv[2],
-            &opts,
-            hash
-        );
-
-        printf("%s\n", hash);
+        hash_object_cmd(argc - 1, argv + 1);
     } else {
         printf("Usage: %s <subcommand>\n", argv[0]);
         return 1;

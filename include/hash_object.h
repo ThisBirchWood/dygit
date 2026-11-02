@@ -13,6 +13,8 @@ typedef struct hash_object_opts {
     bool is_stdin;
 } hash_object_opts;
 
+int hash_object_cmd(int argc, char *argv[]);
+
 int hash_object(
     const char *path,
     const struct hash_object_opts *opts,
