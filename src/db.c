@@ -30,6 +30,10 @@ int write_db(
         return 1;
     }
 
+    if (path_exists(file_path)) {
+        return 1;
+    }
+
     // Write Header, then Contents
     FILE *fp = fopen(file_path, "ab");
     if (fp == NULL) {
