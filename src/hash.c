@@ -1,11 +1,11 @@
 // hash.c
 #include "object.h"
+#include "hash.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <openssl/evp.h>
-
-#define HEADER_MAX 32
 
 static const char HEX[] = "0123456789abcdef";
 

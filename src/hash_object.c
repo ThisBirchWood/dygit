@@ -108,7 +108,7 @@ int hash_object(
             cwd
         );
 
-        persist_object_db(
+        write_db(
             &obj,
             &repo
         );

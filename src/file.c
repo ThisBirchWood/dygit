@@ -34,27 +34,6 @@ fail:
     return NULL;
 }
 
-int write_file(const char *path, const unsigned char *content, size_t content_len) {
-    FILE *fp = fopen(path, "wx");
-    if (fp == NULL) {
-        perror("fopen");
-        return 1;
-    }
-
-    if (fwrite(content, 1, content_len, fp) != content_len) {
-        perror("fwrite");
-        fclose(fp);
-        return 1;
-    }
-
-    if (fclose(fp) != 0) {
-        perror("fclose");
-        return 1;
-    }
-
-    return 0;
-}
-
 bool path_exists(const char *path) {
     struct stat st;
     return stat(path, &st) == 0;

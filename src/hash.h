@@ -2,6 +2,8 @@
 #define HASH_INTERNAL_H
 #include "object.h"
 
+#define HEADER_MAX 32
+
 int create_header(
     struct object *object,
     char *out,
