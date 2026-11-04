@@ -60,7 +60,6 @@ int hash_object_cmd(int argc, char *argv[]) {
 
     char hash[41];
     if (hash_object(path, &opts, hash) != 0) {
-        fprintf(stderr, "hash-object: failed to hash '%s'\n", path);
         return 1;
     }
 
@@ -73,16 +72,18 @@ int hash_object(
     const struct hash_object_opts *opts,
     char *hash
 ) {
+    int ret = 0;
     char cwd[PATH_MAX];
+    size_t file_size = 0;
+    unsigned char *file_contents = read_file(path, &file_size);
+
+    if (file_contents == NULL) return 1;
 
     if (getcwd(cwd, sizeof cwd) == NULL) {
         perror("getcwd");
-        return 1;
+        ret = 1;
+        goto cleanup;
     }
-
-    size_t file_size = 0;
-    unsigned char *file_contents = read_file(path, &file_size);
-    if (file_contents == NULL) return 1;
 
     struct object obj = {
         .type = opts->type,
@@ -94,8 +95,8 @@ int hash_object(
 
     if (get_object_hash(&obj, oid) != 0) {
         fprintf(stderr, "failed to hash object\n");
-        free(file_contents);
-        return 1;
+        ret = 1;
+        goto cleanup;
     }
 
     oid_to_hex(oid, hash);
@@ -103,17 +104,21 @@ int hash_object(
 
     if (opts->write_db) {
         struct repository repo = {0};
-        open_repository(
-            &repo,
-            cwd
-        );
 
-        write_db(
-            &obj,
-            &repo
-        );
+        if (open_repository(&repo, cwd) != 0) {
+            fprintf(stderr, "fatal: not a repository\n");
+            ret = 1;
+            goto cleanup;
+        }
+
+        if (write_db(&obj, &repo) != 0) {
+            fprintf(stderr, "fatal: failed to write to repository\n");
+            ret = 1;
+            goto cleanup;
+        }
     }
 
+cleanup:
     free(file_contents);
-    return 0;
+    return ret;
 }
