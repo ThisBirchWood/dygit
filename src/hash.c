@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 #include <openssl/evp.h>
 
 static const char HEX[] = "0123456789abcdef";

@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <limits.h>
 #include <getopt.h>
 #include <string.h>
 
@@ -93,14 +92,11 @@ int hash_object(
 
     unsigned char oid[HASH_RAW_LEN];
 
-    if (get_object_hash(&obj, oid) != 0) {
+    if (get_object_hash(&obj, obj.hash) != 0) {
         fprintf(stderr, "failed to hash object\n");
         ret = 1;
         goto cleanup;
     }
-
-    oid_to_hex(oid, hash);
-    snprintf(obj.hash, sizeof obj.hash, "%s", hash);
 
     if (opts->write_db) {
         struct repository repo = {0};
@@ -117,6 +113,9 @@ int hash_object(
             goto cleanup;
         }
     }
+
+    // Write Hex Hash to output
+    oid_to_hex(obj.hash, hash);
 
 cleanup:
     free(file_contents);
